@@ -1,10 +1,120 @@
-<ul>
-  {{#pkgs}}
-  <li>
-    <form action="/install" method="post" style="margin-bottom: 0">
-      <input type="hidden" name="filepath" value="{{filepath}}">
-      <input type="submit" value="{{name}} ({{size}})">
-    </form>
-  </li>
-  {{/pkgs}}
-</ul>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PS4 PKG Sender</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+        color: #eee;
+        min-height: 100vh;
+        margin: 0;
+        padding: 20px;
+      }
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+      h1 {
+        text-align: center;
+        color: #00d4ff;
+        margin-bottom: 10px;
+      }
+      .subtitle {
+        text-align: center;
+        color: #888;
+        margin-bottom: 30px;
+      }
+      .pkg-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      .pkg-item {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 8px;
+        margin-bottom: 10px;
+        transition: all 0.2s ease;
+      }
+      .pkg-item:hover {
+        background: rgba(255, 255, 255, 0.1);
+        border-color: #00d4ff;
+      }
+      .pkg-form {
+        margin: 0;
+      }
+      .pkg-button {
+        width: 100%;
+        padding: 15px 20px;
+        background: transparent;
+        border: none;
+        color: #fff;
+        font-size: 16px;
+        cursor: pointer;
+        text-align: left;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .pkg-button:hover {
+        color: #00d4ff;
+      }
+      .pkg-name {
+        font-weight: 500;
+        word-break: break-all;
+      }
+      .pkg-size {
+        color: #888;
+        font-size: 14px;
+        margin-left: 15px;
+        white-space: nowrap;
+      }
+      .empty-state {
+        text-align: center;
+        padding: 60px 20px;
+        color: #666;
+      }
+      .pkg-count {
+        text-align: center;
+        color: #666;
+        font-size: 14px;
+        margin-top: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>🎮 PS4 PKG Sender</h1>
+      <p class="subtitle">Click a package to send it to your PS4</p>
+
+      {{#pkgs.length}}
+      <ul class="pkg-list">
+        {{#pkgs}}
+        <li class="pkg-item">
+          <form class="pkg-form" action="/install" method="post">
+            <input type="hidden" name="filepath" value="{{filepath}}" />
+            <button type="submit" class="pkg-button">
+              <span class="pkg-name">{{name}}</span>
+              <span class="pkg-size">{{size}}</span>
+            </button>
+          </form>
+        </li>
+        {{/pkgs}}
+      </ul>
+      <p class="pkg-count">{{pkgs.length}} package(s) found</p>
+      {{/pkgs.length}} {{^pkgs.length}}
+      <div class="empty-state">
+        <p>📁 No PKG files found</p>
+        <p>Add .pkg files to the <code>files</code> folder</p>
+      </div>
+      {{/pkgs.length}}
+    </div>
+  </body>
+</html>

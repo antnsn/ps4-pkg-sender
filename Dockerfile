@@ -1,12 +1,17 @@
-FROM node:8
+FROM node:25-alpine
 
 WORKDIR /opt/apps/pkg_sender
 
-COPY package.json package.json
-RUN npm install
-#RUN npm install http-server -g
+# Install curl for health checks
+RUN apk add --no-cache curl
+
+COPY package.json package-lock.json ./
+RUN npm ci --only=production
 
 COPY src src
-COPY bin/run bin/run
 
-CMD ["bin/run"]
+# Health check
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
+  CMD curl -f http://localhost:8080/health || exit 1
+
+CMD ["node", "src/app.js"]

@@ -1,9 +1,20 @@
 {
+  "name": "ps4-pkg-sender",
+  "version": "1.0.0",
+  "description": "Web Server UI for the PS4 Remote PKG installer",
+  "main": "src/app.js",
+  "scripts": {
+    "start": "node src/app.js",
+    "dev": "DEBUG=express:* node src/app.js"
+  },
   "dependencies": {
-    "express": "*",
-    "morgan": "*",
-    "mustache": "*",
-    "mustache-express": "*",
-    "filesize": "*"
+    "express": "^4.18.2",
+    "morgan": "^1.10.0",
+    "mustache": "^4.2.0",
+    "mustache-express": "^1.3.2",
+    "filesize": "^10.1.0"
+  },
+  "engines": {
+    "node": ">=25.0.0"
   }
 }
