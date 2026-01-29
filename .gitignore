@@ -32,3 +32,4 @@ files/
 
 # Docker volumes
 volumes/
+compose.yaml

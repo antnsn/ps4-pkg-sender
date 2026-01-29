@@ -5,8 +5,8 @@ WORKDIR /opt/apps/pkg_sender
 # Install curl for health checks
 RUN apk add --no-cache curl
 
-COPY package.json package-lock.json ./
-RUN npm ci --only=production
+COPY package.json ./
+RUN npm install --only=production
 
 COPY src src
 
